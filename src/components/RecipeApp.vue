@@ -10,18 +10,15 @@ const recipe = reactive<Recipe>({
   step: "",
 });
 
-const formValid = computed(() => {
+const formValidEmpty = computed(() => {
   const { name, ingredient, step } = recipe;
   return name && ingredient && step;
 });
 
 function addRecipe() {
-  if (formValid.value === "") return;
+  if (formValidEmpty.value === "") return;
 
-  recipes.value.push({
-    id: Math.random(),
-    ...recipe,
-  });
+  recipes.value = [{ ...recipe, id: Math.random() }];
 
   recipe.name = "";
   recipe.ingredient = "";

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { Issue, Issues } from "./interface/Interface";
 import RecipeApp from "./components/RecipeApp.vue";
 
-const issue = reactive<Issue>({
+const issue = ref<Issue>({
   description: "",
   priority: "Low",
   assignee: "",
@@ -11,8 +11,8 @@ const issue = reactive<Issue>({
 
 const issues = ref<Issues[]>([]);
 
-function formValidEmpty(): void | string {
-  const { description, priority, assignee } = issue;
+function formValidEmpty() {
+  const { description, priority, assignee } = issue.value;
 
   return description && priority && assignee;
 }
@@ -20,14 +20,11 @@ function formValidEmpty(): void | string {
 function addIssue() {
   if (formValidEmpty() === "") return;
 
-  issues.value.push({
-    id: Math.random(),
-    ...issue,
-  });
+  issues.value = [{ ...issue.value, id: Math.random() }];
 
-  issue.description = "";
-  issue.priority = "Low";
-  issue.assignee = "";
+  issue.value.description = "";
+  issue.value.priority = "Low";
+  issue.value.assignee = "";
 }
 </script>
 
